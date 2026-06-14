@@ -320,7 +320,7 @@
 </div>
 
 <div class="stats reveal">
-  <div class="stat"><div class="stat-num">14<sup>év</sup></div><div class="stat-label">tapasztalt fejlesztő</div></div>
+  <div class="stat"><div class="stat-num">AI<sup>↗</sup></div><div class="stat-label">gyorsított fejlesztés</div></div>
   <div class="stat"><div class="stat-num">3<sup>nap</sup></div><div class="stat-label">átlagos átfutás</div></div>
   <div class="stat"><div class="stat-num">100<sup>%</sup></div><div class="stat-label">egyedi design</div></div>
   <div class="stat"><div class="stat-num">24<sup>/7</sup></div><div class="stat-label">gyors kommunikáció</div></div>
@@ -345,7 +345,7 @@
       <span class="service-num">03 /</span><span class="service-icon">🔧</span>
       <div class="service-title">Havi Karbantartás</div>
       <p class="service-desc">Frissítések, tartalom módosítás, technikai support. Mindig naprakész marad az oldalad.</p>
-      <span class="service-price">15 000 Ft / hó</span>
+      <span class="service-price">25 000 – 40 000 Ft / hó</span>
     </div>
   </div>
 </section>
@@ -353,12 +353,12 @@
 <section id="munkak">
   <div class="section-label">// kiemelt projektek</div>
   <div class="projects-grid reveal">
-    <div class="project-card wide" onclick="openProject(0)">
+    <div class="project-card wide" onclick="window.open('https://fitzone-demo.vercel.app','_blank')">
       <div>
         <div class="proj-num">001 / kiemelt</div>
-        <div class="proj-cat cat-web">weboldal</div>
+        <div class="proj-cat cat-web">weboldal · élő demó ●</div>
         <div class="proj-title">FitZone Edzőterem</div>
-        <p class="proj-desc">Teljes weboldal 0-ról: foglalási rendszer, mobil-first design, SEO. Napi 3-5 online foglalás az indulás után.</p>
+        <p class="proj-desc">Komplett edzőterem-oldal valódi, működő online foglalási rendszerrel. Kattints — élőben kipróbálható.</p>
         <div class="proj-tags">
           <span class="proj-tag">next.js</span><span class="proj-tag">tailwind</span>
           <span class="proj-tag">supabase</span><span class="proj-tag">vercel</span>
@@ -382,17 +382,17 @@
     </div>
     <div class="project-card" onclick="openProject(1)">
       <div class="proj-num">002</div>
-      <div class="proj-cat cat-ai">ai tool</div>
+      <div class="proj-cat cat-ai">ai tool · koncepció</div>
       <div class="proj-title">SalonCopy AI</div>
-      <p class="proj-desc">Instagram captionök automatán fodrászatoknak. 12 fizető előfizető, havi 95k Ft bevétel.</p>
+      <p class="proj-desc">Koncepció: Instagram captionök automatikus generálása fodrászatoknak, néhány kattintással.</p>
       <div class="proj-tags"><span class="proj-tag">react</span><span class="proj-tag">claude api</span><span class="proj-tag">stripe</span></div>
       <div class="proj-arrow">↗</div>
     </div>
     <div class="project-card" onclick="openProject(2)">
       <div class="proj-num">003</div>
-      <div class="proj-cat cat-shop">webshop</div>
+      <div class="proj-cat cat-shop">webshop · koncepció</div>
       <div class="proj-title">Kézműves bolt online shopja</div>
-      <p class="proj-desc">Stripe fizetés, saját CMS. 8 rendelés az első héten, 100% mobil forgalom.</p>
+      <p class="proj-desc">Koncepció: webshop Stripe fizetéssel, saját termék-CMS-sel, mobil-first vásárlással.</p>
       <div class="proj-tags"><span class="proj-tag">next.js</span><span class="proj-tag">stripe</span><span class="proj-tag">sanity cms</span></div>
       <div class="proj-arrow">↗</div>
     </div>
@@ -412,8 +412,8 @@
 <div class="testimonial-section reveal">
   <div class="quote-mark">"</div>
   <div>
-    <div class="testimonial-text">Gyors, profi munka. Az új weboldalunk óta sokkal több foglalást kapunk online — megérte minden forint.</div>
-    <div class="testimonial-author">Kovács Péter — FitZone tulajdonos</div>
+    <div class="testimonial-text">Minden oldalt úgy építek meg, mintha a sajátom lenne — gyorsan, igényesen, és olyan designnal, ami tényleg eladja a vállalkozást.</div>
+    <div class="testimonial-author">Oláh Beni — Noxel</div>
   </div>
 </div>
 
@@ -490,31 +490,31 @@
     {
       cat:'AI Tool', catC:'#c8ff00', url:'saloncopy.hu',
       title:'SalonCopy AI',
-      sub:'Havi előfizetéses AI eszköz fodrászatoknak. Beírja a szolgáltatást, kap kész Instagram captionöket és hirdetési szövegeket. 12 aktív előfizető.',
+      sub:'Koncepció egy AI eszközre fodrászatoknak: beírod a szolgáltatást, és másodpercek alatt kész Instagram captionöket és hirdetési szövegeket kapsz.',
       logo:'SALONCOPY', accent:'#c8ff00',
       h1line1:'Instagram szövegek', h1line2:'másodpercek alatt.',
       heroSub:'AI alapú szövegíró fodrászatoknak.',
       btnTxt:'Kipróbálom',
       cards:[{i:'📸',t:'Caption',d:'Instagram poszt szöveg egy kattintással'},{i:'📢',t:'Hirdetés',d:'Facebook és Instagram ads szövegek'},{i:'🔄',t:'Story',d:'Napi story szövegek és promók'}],
-      meta:[{l:'Technológia',v:'Claude API'},{l:'Előfizetés',v:'7 900 Ft/hó'},{l:'Előfizetők',v:'12 fodrászat'}],
-      results:[{n:'12',l:'fizető előfizető'},{n:'95 000 Ft',l:'havi bevétel'},{n:'2 hét',l:'build idő'}],
-      quote:'"Korábban fél órát töltöttem egy Instagram poszttal. Most 30 másodperc és kész. Megéri minden forintja."',
-      author:'Szabó Anna — szalon tulajdonos',
+      meta:[{l:'Technológia',v:'Claude API'},{l:'Típus',v:'SaaS koncepció'},{l:'Build',v:'2 hét'}],
+      results:[{n:'<30mp',l:'egy caption ideje'},{n:'AI',l:'Claude API motor'},{n:'2 hét',l:'koncepció build'}],
+      quote:'Koncepció demó — egy termékötlet, amit AI-jal építenék fel valódi ügyfélnek.',
+      author:'Noxel · koncepció',
       tags:['react','claude api','stripe','vercel','supabase']
     },
     {
       cat:'Webshop', catC:'#ff6b6b', url:'kezmuvesshop.hu',
       title:'Kézműves Bolt Shop',
-      sub:'Teljes webshop egy budapesti kézműves boltnak. Stripe fizetés, saját CMS a termékekhez, mobil-first. Az első héten 8 online rendelés érkezett.',
+      sub:'Webshop koncepció egy kézműves boltnak: Stripe fizetés, saját termék-CMS, mobil-first vásárlási élmény.',
       logo:'KÉZMŰVES', accent:'#ff6b6b',
       h1line1:'Egyedi kézműves', h1line2:'termékek.',
       heroSub:'Minden darab egyedi, minden darab különleges.',
       btnTxt:'Megrendelem',
       cards:[{i:'🛒',t:'Webshop',d:'Online vásárlás Stripe fizetéssel'},{i:'📦',t:'Készlet',d:'Automatikus készletkezelés'},{i:'🚚',t:'Szállítás',d:'Magyar futárszolgálat integráció'}],
-      meta:[{l:'Átfutás',v:'5 nap'},{l:'Projekt ár',v:'180 000 Ft'},{l:'Platform',v:'Next.js + Sanity'}],
-      results:[{n:'8',l:'rendelés 1. héten'},{n:'5 nap',l:'elkészülési idő'},{n:'100%',l:'mobil forgalom'}],
-      quote:'"Végre van rendes weboldalunk. Az ügyfelek imádják hogy online is tudnak rendelni."',
-      author:'Nagy Erzsébet — bolt tulajdonos',
+      meta:[{l:'Típus',v:'Webshop koncepció'},{l:'Fizetés',v:'Stripe'},{l:'Platform',v:'Next.js + Sanity'}],
+      results:[{n:'Stripe',l:'biztonságos fizetés'},{n:'CMS',l:'saját termékkezelő'},{n:'100%',l:'mobil-first'}],
+      quote:'Koncepció demó — egy működő webshop-ötlet, amit valódi kézműves boltnak építenék fel.',
+      author:'Noxel · koncepció',
       tags:['next.js','stripe','sanity cms','vercel','tailwind']
     }
   ];
