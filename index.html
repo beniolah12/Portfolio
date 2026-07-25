@@ -38,45 +38,39 @@
   }
   .nav-cta:hover { background: linear-gradient(135deg,#5b53e0,#2563eb); box-shadow: 0 0 18px rgba(108,99,255,0.3); transform: translateY(-1px); }
   .hero {
-    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 100px 2.5rem 3rem; position: relative; overflow: hidden;
+    min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: 110px 2.5rem 4rem; position: relative; overflow: hidden;
   }
-  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.6; z-index: 0; }
-  .hero-eyebrow, .hero-title, .hero-bottom { position: relative; z-index: 1; }
-  .hero-bg-text {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: clamp(64px, 15vw, 200px); font-weight: 800; color: transparent;
-    -webkit-text-stroke: 1px #1a1a3a; white-space: nowrap; pointer-events: none;
-    user-select: none; letter-spacing: -0.05em; opacity: 0.5;
+  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.55; z-index: 0; }
+  .hero-inner { position: relative; z-index: 1; max-width: 720px; opacity: 0; animation: fadeUp 0.7s 0.15s ease forwards; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: #1a1730; border: 1px solid #2d2850; border-radius: 99px;
+    padding: 0.5rem 1.1rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);
+    margin-bottom: 1.75rem;
   }
-  .hero-eyebrow {
-    font-family: var(--font-mono); font-size: 0.72rem; color: #6c63ff;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;
-    opacity: 0; animation: fadeUp 0.7s 0.2s ease forwards;
-  }
-  .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--lime); }
+  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #6c63ff; box-shadow: 0 0 8px rgba(108,99,255,0.9); }
   .hero-title {
-    font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 800; line-height: 0.88;
-    letter-spacing: -0.04em; margin-bottom: 2.5rem;
-    opacity: 0; animation: fadeUp 0.7s 0.3s ease forwards;
+    font-size: clamp(2.6rem, 6.5vw, 5rem); font-weight: 700; line-height: 1.03;
+    letter-spacing: -0.03em; margin-bottom: 1.25rem; color: var(--white);
   }
-  .hero-title .line2 { color: #6c63ff; display: block; }
-  .hero-title .line3 { color: var(--muted); display: block; }
-  .hero-bottom {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    opacity: 0; animation: fadeUp 0.7s 0.5s ease forwards;
+  .hero-title .accent { color: #6c63ff; display: block; }
+  .hero-desc { font-family: var(--font-mono); font-size: 1rem; color: var(--muted); max-width: 480px; line-height: 1.6; margin-bottom: 2rem; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-outline {
+    background: transparent; color: var(--white); border: 1px solid #2d2850; border-radius: 8px;
+    padding: 0.9rem 1.6rem; font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;
   }
-  .hero-desc { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted2); max-width: 360px; line-height: 1.8; }
-  .hero-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-outline .arr { color: #6c63ff; transition: transform 0.2s; }
+  .btn-outline:hover { border-color: #6c63ff; background: rgba(108,99,255,0.06); transform: translateY(-2px); }
+  .btn-outline:hover .arr { transform: translate(2px,-2px); }
   .btn-main {
     background: linear-gradient(135deg,#6c63ff,#3b82f6); color: #fff; border-radius: 8px; padding: 1rem 2.25rem;
     font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
     border: none; cursor: pointer; letter-spacing: -0.01em; transition: all 0.2s; display: inline-block;
   }
   .btn-main:hover { background: linear-gradient(135deg,#5b53e0,#2563eb); box-shadow: 0 0 24px rgba(108,99,255,0.35); transform: translateY(-3px); }
-  .btn-ghost { color: var(--muted2); font-family: var(--font-mono); font-size: 0.8rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
-  .btn-ghost:hover { color: var(--white); }
   .marquee-wrap { border-top: 1px solid #1a1a3a; border-bottom: 1px solid #1a1a3a; overflow: hidden; padding: 0.9rem 0; background: var(--grey); }
   .marquee-track { display: flex; gap: 3rem; animation: marquee 20s linear infinite; white-space: nowrap; }
   .marquee-item { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; display: flex; align-items: center; gap: 1.5rem; }
@@ -229,8 +223,8 @@
     .hero-eyebrow { font-size: 0.62rem; margin-bottom: 1.25rem; }
     .hero-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
     .hero-desc { font-size: 0.8rem; max-width: 100%; }
-    .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.75rem; width: 100%; }
-    .btn-main { width: 100%; text-align: center; padding: 1rem; font-size: 0.9rem; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 0.75rem; width: 100%; }
+    .btn-main, .btn-outline { width: 100%; text-align: center; justify-content: center; padding: 1rem; font-size: 0.9rem; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat { padding: 1.25rem; border-right: none; border-bottom: 1px solid #1a1a3a; }
     .stat:nth-child(odd) { border-right: 1px solid #1a1a3a; }
@@ -289,18 +283,13 @@
 
 <section class="hero">
   <canvas id="heroCanvas" class="hero-canvas"></canvas>
-  <div class="hero-bg-text">NOXEL</div>
-  <div class="hero-eyebrow">elérhető projektekre · budapest, hu · 2026</div>
-  <h1 class="hero-title">
-    Weboldalak
-    <span class="line2">amik dolgoznak</span>
-    <span class="line3">helyetted.</span>
-  </h1>
-  <div class="hero-bottom">
-    <p class="hero-desc">Gyors, modern weboldalakat készítek kis- és középvállalkozásoknak. Nem sablon — hanem valami ami tényleg eladja a vállalkozásodat.</p>
+  <div class="hero-inner">
+    <div class="hero-pill"><span class="pill-dot"></span> elérhető projektekre · budapest</div>
+    <h1 class="hero-title">Weboldalak amik <span class="accent">dolgoznak helyetted.</span></h1>
+    <p class="hero-desc">Gyors, modern weboldalak és AI automatizáció.</p>
     <div class="hero-actions">
-      <button class="btn-main" onclick="document.getElementById('kapcsolat').scrollIntoView({behavior:'smooth'})">Projektet indítok ↗</button>
-      <a class="btn-ghost" href="#munkak">munkáim →</a>
+      <button class="btn-outline" onclick="document.getElementById('kapcsolat').scrollIntoView({behavior:'smooth'})">Projektet indítok <span class="arr">↗</span></button>
+      <a class="btn-outline" href="#munkak">munkáim <span class="arr">→</span></a>
     </div>
   </div>
 </section>
