@@ -39,8 +39,10 @@
   .nav-cta:hover { background: linear-gradient(135deg,#5b53e0,#2563eb); box-shadow: 0 0 18px rgba(108,99,255,0.3); transform: translateY(-1px); }
   .hero {
     min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 100px 2.5rem 5rem; position: relative; overflow: hidden;
+    padding: 100px 2.5rem 3rem; position: relative; overflow: hidden;
   }
+  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.35; z-index: 0; }
+  .hero-eyebrow, .hero-title, .hero-bottom { position: relative; z-index: 1; }
   .hero-bg-text {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     font-size: clamp(64px, 15vw, 200px); font-weight: 800; color: transparent;
@@ -221,7 +223,7 @@
     nav { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
     .nav-cta { font-size: 0.72rem; padding: 0.6rem 1rem; }
-    .hero { padding: 130px 1.25rem 3rem; min-height: auto; }
+    .hero { padding: 72px 1.25rem 2rem; min-height: auto; }
     .hero-bg-text { font-size: clamp(60px, 20vw, 100px); }
     .hero-title { font-size: clamp(1.9rem, 8vw, 3.4rem); margin-bottom: 2rem; }
     .hero-eyebrow { font-size: 0.62rem; margin-bottom: 1.25rem; }
@@ -285,6 +287,7 @@
 </nav>
 
 <section class="hero">
+  <canvas id="heroCanvas" class="hero-canvas"></canvas>
   <div class="hero-bg-text">NOXEL</div>
   <div class="hero-eyebrow">elérhető projektekre · budapest, hu · 2026</div>
   <h1 class="hero-title">
@@ -596,6 +599,48 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+<script>
+  // Hero particle háló
+  (function(){
+    const canvas = document.getElementById('heroCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    function resize(){ canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('load', resize);
+    const N = window.innerWidth < 640 ? 55 : 120;
+    const dots = Array.from({length:N}, function(){ return {
+      x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+      r: Math.random()*1.5+0.3, vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4
+    };});
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let k=0;k<dots.length;k++){
+        const d = dots[k];
+        d.x+=d.vx; d.y+=d.vy;
+        if(d.x<0||d.x>canvas.width) d.vx*=-1;
+        if(d.y<0||d.y>canvas.height) d.vy*=-1;
+        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(108,99,255,0.7)'; ctx.fill();
+      }
+      for(let i=0;i<dots.length;i++){
+        for(let j=i+1;j<dots.length;j++){
+          const a=dots[i], b=dots[j];
+          const dist=Math.hypot(a.x-b.x, a.y-b.y);
+          if(dist<120){
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle='rgba(108,99,255,'+(0.15*(1-dist/120))+')';
+            ctx.lineWidth=0.5; ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
 </script>
 </body>
 </html>
