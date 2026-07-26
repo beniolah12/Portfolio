@@ -23,20 +23,26 @@
   }
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; justify-content: flex-start; align-items: center; gap: 2.5rem;
     padding: 1.25rem 2.5rem; border-bottom: 1px solid #1a1a3a;
     background: rgba(5,5,15,0.94); backdrop-filter: blur(12px);
   }
-  .nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #6c63ff; }
-  .nav-links { display: flex; gap: 2.5rem; font-family: var(--font-mono); font-size: 0.75rem; }
+  .nav-logo { font-size: 1rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #6c63ff; text-decoration: none; cursor: pointer; }
+  .nav-links { display: flex; gap: 2rem; font-family: var(--font-mono); font-size: 0.75rem; }
   .nav-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; letter-spacing: 0.05em; }
   .nav-links a:hover { color: var(--white); }
   .nav-cta {
     font-family: var(--font-mono); font-size: 0.75rem; background: linear-gradient(135deg,#6c63ff,#3b82f6); color: #fff; border-radius: 8px;
     padding: 0.5rem 1.25rem; border: none; cursor: pointer; font-weight: 500;
     letter-spacing: 0.05em; text-transform: uppercase; transition: background 0.2s, transform 0.2s;
+    white-space: nowrap; flex-shrink: 0;
   }
   .nav-cta:hover { background: linear-gradient(135deg,#5b53e0,#2563eb); box-shadow: 0 0 18px rgba(108,99,255,0.3); transform: translateY(-1px); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; margin-left: auto; }
+  .lang-switch { display: inline-flex; border: 1px solid #2d2850; border-radius: 8px; overflow: hidden; font-family: var(--font-mono); flex-shrink: 0; }
+  .lang-switch button { background: transparent; color: var(--muted); border: none; cursor: pointer; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; padding: 0.45rem 0.65rem; transition: background 0.2s, color 0.2s; }
+  .lang-switch button:hover { color: var(--white); }
+  .lang-switch button.active { background: linear-gradient(135deg,#6c63ff,#3b82f6); color: #fff; }
   .hero {
     min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
     padding: 110px 2.5rem 4rem; position: relative; overflow: hidden;
@@ -212,6 +218,11 @@
   .modal-cta { padding: 1.5rem 2.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
   .modal-cta p { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
 
+  /* Köztes szélesség: rejtjük a nav-linkeket, hogy a váltó + CTA elférjen */
+  @media (max-width: 980px) {
+    .nav-links { display: none; }
+  }
+
   /* MOBILE */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.25rem; }
@@ -270,26 +281,32 @@
 <body>
 
 <nav>
-  <div class="nav-logo">Noxel™</div>
+  <a href="/" class="nav-logo" onclick="if(location.pathname==='/'){event.preventDefault();window.scrollTo({top:0,behavior:'smooth'});}">Noxel™</a>
   <div class="nav-links">
-    <a href="#munkak">munkák</a>
-    <a href="#szolgaltatasok">szolgáltatások</a>
-    <a href="#folyamat">folyamat</a>
-    <a href="/blog">blog</a>
-    <a href="#kapcsolat">kapcsolat</a>
+    <a href="#munkak" data-i18n="nav.work">munkák</a>
+    <a href="#szolgaltatasok" data-i18n="nav.services">szolgáltatások</a>
+    <a href="#folyamat" data-i18n="nav.process">folyamat</a>
+    <a href="/blog" data-i18n="nav.blog">blog</a>
+    <a href="#kapcsolat" data-i18n="nav.contact">kapcsolat</a>
   </div>
-  <button class="nav-cta" onclick="document.getElementById('kapcsolat').scrollIntoView({behavior:'smooth'})">Projektet indítok</button>
+  <div class="nav-right">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="hu">HU</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+    <button class="nav-cta" data-i18n="cta.start" onclick="document.getElementById('kapcsolat').scrollIntoView({behavior:'smooth'})">Projektet indítok</button>
+  </div>
 </nav>
 
 <section class="hero">
   <canvas id="heroCanvas" class="hero-canvas"></canvas>
   <div class="hero-inner">
-    <div class="hero-pill"><span class="pill-dot"></span> elérhető projektekre · budapest</div>
-    <h1 class="hero-title">Weboldalak amik <span class="accent">dolgoznak helyetted.</span></h1>
-    <p class="hero-desc">Gyors, modern weboldalak és AI automatizáció.</p>
+    <div class="hero-pill"><span class="pill-dot"></span> <span data-i18n="hero.pill">elérhető projektekre · budapest</span></div>
+    <h1 class="hero-title" data-i18n-html="hero.title">Weboldalak amik <span class="accent">dolgoznak helyetted.</span></h1>
+    <p class="hero-desc" data-i18n="hero.desc">Gyors, modern weboldalak és AI automatizáció.</p>
     <div class="hero-actions">
-      <button class="btn-outline" onclick="document.getElementById('kapcsolat').scrollIntoView({behavior:'smooth'})">Projektet indítok <span class="arr">↗</span></button>
-      <a class="btn-outline" href="#munkak">munkáim <span class="arr">→</span></a>
+      <button class="btn-outline" data-i18n-html="hero.btn1" onclick="document.getElementById('kapcsolat').scrollIntoView({behavior:'smooth'})">Projektet indítok <span class="arr">↗</span></button>
+      <a class="btn-outline" href="#munkak" data-i18n-html="hero.btn2">munkáim <span class="arr">→</span></a>
     </div>
   </div>
 </section>
@@ -316,51 +333,51 @@
 </div>
 
 <div class="stats reveal">
-  <div class="stat"><div class="stat-num">AI<sup>↗</sup></div><div class="stat-label">gyorsított fejlesztés</div></div>
-  <div class="stat"><div class="stat-num">3<sup>nap</sup></div><div class="stat-label">átlagos átfutás</div></div>
-  <div class="stat"><div class="stat-num">100<sup>%</sup></div><div class="stat-label">egyedi design</div></div>
-  <div class="stat"><div class="stat-num">24<sup>/7</sup></div><div class="stat-label">gyors kommunikáció</div></div>
+  <div class="stat"><div class="stat-num">AI<sup>↗</sup></div><div class="stat-label" data-i18n="stat.1">gyorsított fejlesztés</div></div>
+  <div class="stat"><div class="stat-num">3<sup data-i18n="stat.day">nap</sup></div><div class="stat-label" data-i18n="stat.2">átlagos átfutás</div></div>
+  <div class="stat"><div class="stat-num">100<sup>%</sup></div><div class="stat-label" data-i18n="stat.3">egyedi design</div></div>
+  <div class="stat"><div class="stat-num">24<sup>/7</sup></div><div class="stat-label" data-i18n="stat.4">gyors kommunikáció</div></div>
 </div>
 
 <section id="szolgaltatasok">
-  <div class="section-label">// szolgáltatások</div>
+  <div class="section-label" data-i18n="label.services">// szolgáltatások</div>
   <div class="services-grid reveal">
     <div class="service-card">
       <span class="service-num">01 /</span><span class="service-icon">⚡</span>
       <div class="service-title">Landing Page</div>
-      <p class="service-desc">Egyoldalas, gyors, mobilra optimalizált oldal ami meggyőzi a látogatókat. SEO-barát, Google-ra optimalizált.</p>
+      <p class="service-desc" data-i18n="svc1.desc">Egyoldalas, gyors, mobilra optimalizált oldal ami meggyőzi a látogatókat. SEO-barát, Google-ra optimalizált.</p>
       <span class="service-price">60 000 – 100 000 Ft</span>
     </div>
     <div class="service-card">
       <span class="service-num">02 /</span><span class="service-icon">🌐</span>
-      <div class="service-title">Többoldalas Weboldal</div>
-      <p class="service-desc">Teljes céges weboldal: főoldal, rólunk, szolgáltatások, kapcsolat. Foglalási rendszerrel is.</p>
+      <div class="service-title" data-i18n="svc2.title">Többoldalas Weboldal</div>
+      <p class="service-desc" data-i18n="svc2.desc">Teljes céges weboldal: főoldal, rólunk, szolgáltatások, kapcsolat. Foglalási rendszerrel is.</p>
       <span class="service-price">130 000 – 180 000 Ft</span>
     </div>
     <div class="service-card">
       <span class="service-num">03 /</span><span class="service-icon">🔧</span>
-      <div class="service-title">Havi Karbantartás</div>
-      <p class="service-desc">Frissítések, tartalom módosítás, technikai support. Mindig naprakész marad az oldalad.</p>
-      <span class="service-price">20 000 – 30 000 Ft / hó</span>
+      <div class="service-title" data-i18n="svc3.title">Havi Karbantartás</div>
+      <p class="service-desc" data-i18n="svc3.desc">Frissítések, tartalom módosítás, technikai support. Mindig naprakész marad az oldalad.</p>
+      <span class="service-price" data-i18n="svc3.price">20 000 – 30 000 Ft / hó</span>
     </div>
     <div class="service-card">
       <span class="service-num">04 /</span><span class="service-icon">🤖</span>
-      <div class="service-title">AI Automatizáció</div>
-      <p class="service-desc">Chatbotok, email automatizáció és AI megoldások kis- és középvállalkozásoknak. Minden projekt egyedi igény szerint.</p>
-      <a href="#kapcsolat" class="service-price" style="text-decoration:none">Ajánlatkérés →</a>
+      <div class="service-title" data-i18n="svc4.title">AI Automatizáció</div>
+      <p class="service-desc" data-i18n="svc4.desc">Chatbotok, email automatizáció és AI megoldások kis- és középvállalkozásoknak. Minden projekt egyedi igény szerint.</p>
+      <a href="#kapcsolat" class="service-price" style="text-decoration:none" data-i18n="svc4.cta">Ajánlatkérés →</a>
     </div>
   </div>
 </section>
 
 <section id="munkak">
-  <div class="section-label">// kiemelt projektek</div>
+  <div class="section-label" data-i18n="label.work">// kiemelt projektek</div>
   <div class="projects-grid reveal">
     <div class="project-card wide" onclick="window.open('https://fitzone-demo.vercel.app','_blank')">
       <div>
         <div class="proj-num">001 / kiemelt</div>
-        <div class="proj-cat cat-web">weboldal · élő demó ●</div>
-        <div class="proj-title">FitZone Edzőterem</div>
-        <p class="proj-desc">Komplett edzőterem-oldal valódi, működő online foglalási rendszerrel. Kattints — élőben kipróbálható.</p>
+        <div class="proj-cat cat-web" data-i18n="proj1.cat">weboldal · élő demó ●</div>
+        <div class="proj-title" data-i18n="proj1.title">FitZone Edzőterem</div>
+        <p class="proj-desc" data-i18n="proj1.desc">Komplett edzőterem-oldal valódi, működő online foglalási rendszerrel. Kattints — élőben kipróbálható.</p>
         <div class="proj-tags">
           <span class="proj-tag">next.js</span><span class="proj-tag">tailwind</span>
           <span class="proj-tag">supabase</span><span class="proj-tag">vercel</span>
@@ -384,25 +401,25 @@
     </div>
     <div class="project-card" onclick="window.open('https://saloncopy-demo.vercel.app','_blank')">
       <div class="proj-num">002</div>
-      <div class="proj-cat cat-ai">ai tool · élő demó ●</div>
+      <div class="proj-cat cat-ai" data-i18n="proj2.cat">ai tool · élő demó ●</div>
       <div class="proj-title">SalonCopy AI</div>
-      <p class="proj-desc">Működő AI caption-generátor fodrászatoknak. Kattints — élőben kipróbálható.</p>
+      <p class="proj-desc" data-i18n="proj2.desc">Működő AI caption-generátor fodrászatoknak. Kattints — élőben kipróbálható.</p>
       <div class="proj-tags"><span class="proj-tag">react</span><span class="proj-tag">claude api</span><span class="proj-tag">stripe</span></div>
       <div class="proj-arrow">↗</div>
     </div>
     <div class="project-card" onclick="window.open('https://kezmuves-demo.vercel.app','_blank')">
       <div class="proj-num">003</div>
-      <div class="proj-cat cat-shop">webshop · élő demó ●</div>
-      <div class="proj-title">Kézműves bolt online shopja</div>
-      <p class="proj-desc">Működő webshop kosárral és Stripe-stílusú fizetéssel. Kattints — élőben kipróbálható.</p>
+      <div class="proj-cat cat-shop" data-i18n="proj3.cat">webshop · élő demó ●</div>
+      <div class="proj-title" data-i18n="proj3.title">Kézműves bolt online shopja</div>
+      <p class="proj-desc" data-i18n="proj3.desc">Működő webshop kosárral és Stripe-stílusú fizetéssel. Kattints — élőben kipróbálható.</p>
       <div class="proj-tags"><span class="proj-tag">next.js</span><span class="proj-tag">stripe</span><span class="proj-tag">sanity cms</span></div>
       <div class="proj-arrow">↗</div>
     </div>
     <div class="project-card" onclick="window.open('https://shopwriter-ai.vercel.app','_blank')">
       <div class="proj-num">004</div>
-      <div class="proj-cat cat-ai">saas · ai · élő ●</div>
+      <div class="proj-cat cat-ai" data-i18n="proj4.cat">saas · ai · élő ●</div>
       <div class="proj-title">ShopWriter AI</div>
-      <p class="proj-desc">AI-alapú tartalom generátor magyar webshopoknak: termékleírások, social posztok, email kampányok és hirdetésszövegek — másodpercek alatt.</p>
+      <p class="proj-desc" data-i18n="proj4.desc">AI-alapú tartalom generátor magyar webshopoknak: termékleírások, social posztok, email kampányok és hirdetésszövegek — másodpercek alatt.</p>
       <div class="proj-tags"><span class="proj-tag">next.js</span><span class="proj-tag">claude api</span><span class="proj-tag">saas</span></div>
       <div class="proj-arrow">↗</div>
     </div>
@@ -410,19 +427,19 @@
 </section>
 
 <section id="folyamat">
-  <div class="section-label">// hogyan dolgozom</div>
+  <div class="section-label" data-i18n="label.process">// hogyan dolgozom</div>
   <div class="process-steps reveal">
-    <div class="process-step"><div class="step-num">01</div><div class="step-title">Egyeztetés</div><p class="step-desc">Elmondod mit szeretnél, én felteszem a fontos kérdéseket. Ingyenes, kötelezettség nélkül.</p><span class="step-time">nap 1</span></div>
-    <div class="process-step"><div class="step-num">02</div><div class="step-title">Design</div><p class="step-desc">Megmutatom hogyan fog kinézni az oldal mielőtt nekiállok. Addig módosítjuk amíg nem tökéletes.</p><span class="step-time">nap 1–2</span></div>
-    <div class="process-step"><div class="step-num">03</div><div class="step-title">Fejlesztés</div><p class="step-desc">Megépítem az oldalt. Gyors, reszponzív, SEO-barát. Folyamatosan láthatod a haladást.</p><span class="step-time">nap 2–4</span></div>
-    <div class="process-step"><div class="step-num">04</div><div class="step-title">Átadás</div><p class="step-desc">Live az oldal. Megtanítom hogyan kezeld, és maradok elérhető ha bármit módosítani kell.</p><span class="step-time">nap 4–5</span></div>
+    <div class="process-step"><div class="step-num">01</div><div class="step-title" data-i18n="step1.title">Egyeztetés</div><p class="step-desc" data-i18n="step1.desc">Elmondod mit szeretnél, én felteszem a fontos kérdéseket. Ingyenes, kötelezettség nélkül.</p><span class="step-time" data-i18n="step1.time">nap 1</span></div>
+    <div class="process-step"><div class="step-num">02</div><div class="step-title" data-i18n="step2.title">Design</div><p class="step-desc" data-i18n="step2.desc">Megmutatom hogyan fog kinézni az oldal mielőtt nekiállok. Addig módosítjuk amíg nem tökéletes.</p><span class="step-time" data-i18n="step2.time">nap 1–2</span></div>
+    <div class="process-step"><div class="step-num">03</div><div class="step-title" data-i18n="step3.title">Fejlesztés</div><p class="step-desc" data-i18n="step3.desc">Megépítem az oldalt. Gyors, reszponzív, SEO-barát. Folyamatosan láthatod a haladást.</p><span class="step-time" data-i18n="step3.time">nap 2–4</span></div>
+    <div class="process-step"><div class="step-num">04</div><div class="step-title" data-i18n="step4.title">Átadás</div><p class="step-desc" data-i18n="step4.desc">Live az oldal. Megtanítom hogyan kezeld, és maradok elérhető ha bármit módosítani kell.</p><span class="step-time" data-i18n="step4.time">nap 4–5</span></div>
   </div>
 </section>
 
 <div class="testimonial-section reveal">
   <div class="quote-mark">"</div>
   <div>
-    <div class="testimonial-text">Minden oldalt úgy építek meg, mintha a sajátom lenne — gyorsan, igényesen, és olyan designnal, ami tényleg eladja a vállalkozást.</div>
+    <div class="testimonial-text" data-i18n="testimonial.text">Minden oldalt úgy építek meg, mintha a sajátom lenne — gyorsan, igényesen, és olyan designnal, ami tényleg eladja a vállalkozást.</div>
     <div class="testimonial-author">Oláh Beni — Noxel</div>
   </div>
 </div>
@@ -430,8 +447,8 @@
 <section id="kapcsolat">
   <div class="contact-section reveal">
     <div>
-      <h2 class="contact-title">Van egy<br>projekted?<br><span>Írj.</span></h2>
-      <p class="contact-sub">Ingyenes konzultáció · Gyors válasz · Budapest</p>
+      <h2 class="contact-title" data-i18n-html="contact.title">Van egy<br>projekted?<br><span>Írj.</span></h2>
+      <p class="contact-sub" data-i18n="contact.sub">Ingyenes konzultáció · Gyors válasz · Budapest</p>
     </div>
     <div class="contact-links">
       <a class="contact-link" href="mailto:noxel.hu@gmail.com">
@@ -443,7 +460,7 @@
         <span class="contact-arrow">↗</span>
       </a>
       <a class="contact-link" href="tel:+36706186268">
-        <div><div>Telefon</div><div class="contact-link-sub">+36 70 618 6268</div></div>
+        <div><div data-i18n="contact.phone">Telefon</div><div class="contact-link-sub">+36 70 618 6268</div></div>
         <span class="contact-arrow">↗</span>
       </a>
     </div>
@@ -451,21 +468,21 @@
 </section>
 
 <section id="blog">
-  <div class="section-label">// legújabb cikk</div>
+  <div class="section-label" data-i18n="label.blog">// legújabb cikk</div>
   <a href="/blog/ai-automatizacio-vallalkozasoknak" class="reveal" style="display:block;background:var(--black);border:1px solid #1a1a3a;border-radius:14px;padding:2.5rem;max-width:720px;transition:border-color .25s, box-shadow .25s, transform .25s;" onmouseover="this.style.borderColor='#6c63ff';this.style.boxShadow='0 0 30px rgba(108,99,255,0.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#1a1a3a';this.style.boxShadow='none';this.style.transform='none'">
-    <span style="display:inline-block;background:#1a1730;color:#6c63ff;border:1px solid #2d2850;border-radius:99px;font-size:0.68rem;font-weight:600;padding:0.28rem 0.8rem;margin-bottom:1.1rem;letter-spacing:0.03em;font-family:var(--font-mono)">AI Automatizáció</span>
-    <div style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:0.75rem;color:var(--white)">Mi az AI automatizáció és miért kell ez a vállalkozásodnak?</div>
-    <p style="font-family:var(--font-mono);font-size:0.82rem;color:var(--muted2);line-height:1.7;margin-bottom:1.1rem;max-width:560px;">Az AI automatizáció nem csak nagy cégeknek való. Megmutatjuk, hogyan spórolhatsz napi 2-3 órát automatizációval.</p>
-    <div style="font-family:var(--font-mono);font-size:0.68rem;color:#444466;margin-bottom:1.25rem;">2026. július · 5 perc olvasás</div>
-    <span style="color:#6c63ff;font-weight:600;font-size:0.88rem;">Elolvasom →</span>
+    <span data-i18n="blog.badge" style="display:inline-block;background:#1a1730;color:#6c63ff;border:1px solid #2d2850;border-radius:99px;font-size:0.68rem;font-weight:600;padding:0.28rem 0.8rem;margin-bottom:1.1rem;letter-spacing:0.03em;font-family:var(--font-mono)">AI Automatizáció</span>
+    <div data-i18n="blog.title" style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:0.75rem;color:var(--white)">Mi az AI automatizáció és miért kell ez a vállalkozásodnak?</div>
+    <p data-i18n="blog.desc" style="font-family:var(--font-mono);font-size:0.82rem;color:var(--muted2);line-height:1.7;margin-bottom:1.1rem;max-width:560px;">Az AI automatizáció nem csak nagy cégeknek való. Megmutatjuk, hogyan spórolhatsz napi 2-3 órát automatizációval.</p>
+    <div data-i18n="blog.meta" style="font-family:var(--font-mono);font-size:0.68rem;color:#444466;margin-bottom:1.25rem;">2026. július · 5 perc olvasás</div>
+    <span data-i18n="blog.read" style="color:#6c63ff;font-weight:600;font-size:0.88rem;">Elolvasom →</span>
   </a>
-  <div style="margin-top:1.75rem;"><a href="/blog" style="color:var(--muted);font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;">Összes cikk →</a></div>
+  <div style="margin-top:1.75rem;"><a href="/blog" data-i18n="blog.all" style="color:var(--muted);font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;">Összes cikk →</a></div>
 </section>
 
 <footer>
   <span>© 2026 Noxel</span>
-  <div class="footer-status"><div class="status-dot"></div><span>elérhető projektekre</span></div>
-  <span>budapest, magyarország</span>
+  <div class="footer-status"><div class="status-dot"></div><span data-i18n="footer.status">elérhető projektekre</span></div>
+  <span data-i18n="footer.loc">budapest, magyarország</span>
 </footer>
 
 <!-- MODAL -->
@@ -630,6 +647,102 @@
       requestAnimationFrame(draw);
     }
     draw();
+  })();
+</script>
+<script>
+  // --- Nyelvváltó (HU alap a HTML-ben, EN a szótárból) ---
+  const EN = {
+    // nav
+    'nav.work': 'work', 'nav.services': 'services', 'nav.process': 'process',
+    'nav.blog': 'blog', 'nav.contact': 'contact', 'cta.start': 'Start a project',
+    // hero
+    'hero.pill': 'available for projects · budapest',
+    'hero.title': 'Websites that <span class="accent">work for you.</span>',
+    'hero.desc': 'Fast, modern websites and AI automation.',
+    'hero.btn1': 'Start a project <span class="arr">↗</span>',
+    'hero.btn2': 'my work <span class="arr">→</span>',
+    // stats
+    'stat.day': 'days', 'stat.1': 'accelerated development', 'stat.2': 'average turnaround',
+    'stat.3': 'custom design', 'stat.4': 'fast communication',
+    // section labels
+    'label.services': '// services', 'label.work': '// featured projects',
+    'label.process': '// how i work', 'label.blog': '// latest article',
+    // services
+    'svc1.desc': 'A single-page, fast, mobile-optimized site that convinces visitors. SEO-friendly, optimized for Google.',
+    'svc2.title': 'Multi-page Website',
+    'svc2.desc': 'A full company website: home, about, services, contact. Booking system available too.',
+    'svc3.title': 'Monthly Maintenance',
+    'svc3.desc': 'Updates, content changes, technical support. Your site always stays up to date.',
+    'svc3.price': '20 000 – 30 000 Ft / mo',
+    'svc4.title': 'AI Automation',
+    'svc4.desc': 'Chatbots, email automation and AI solutions for small and medium businesses. Every project tailored to your needs.',
+    'svc4.cta': 'Get a quote →',
+    // projects
+    'proj1.cat': 'website · live demo ●', 'proj1.title': 'FitZone Gym',
+    'proj1.desc': 'A complete gym website with a real, working online booking system. Click — try it live.',
+    'proj2.cat': 'ai tool · live demo ●',
+    'proj2.desc': 'A working AI caption generator for hair salons. Click — try it live.',
+    'proj3.cat': 'webshop · live demo ●', 'proj3.title': 'Handmade store online shop',
+    'proj3.desc': 'A working web store with a cart and Stripe-style checkout. Click — try it live.',
+    'proj4.cat': 'saas · ai · live ●',
+    'proj4.desc': 'AI-powered content generator for online stores: product descriptions, social posts, email campaigns and ad copy — in seconds.',
+    // process
+    'step1.title': 'Consultation', 'step1.desc': 'You tell me what you want, I ask the important questions. Free, no obligation.', 'step1.time': 'day 1',
+    'step2.title': 'Design', 'step2.desc': 'I show you how the site will look before I build it. We tweak it until it’s perfect.', 'step2.time': 'day 1–2',
+    'step3.title': 'Development', 'step3.desc': 'I build the site. Fast, responsive, SEO-friendly. You can follow the progress the whole way.', 'step3.time': 'day 2–4',
+    'step4.title': 'Handover', 'step4.desc': 'The site goes live. I teach you how to manage it, and stay available for any changes.', 'step4.time': 'day 4–5',
+    // testimonial
+    'testimonial.text': 'I build every site as if it were my own — fast, with care, and with a design that actually sells the business.',
+    // contact
+    'contact.title': 'Got a<br>project?<br><span>Write.</span>',
+    'contact.sub': 'Free consultation · Fast reply · Budapest',
+    'contact.phone': 'Phone',
+    // blog
+    'blog.badge': 'AI Automation',
+    'blog.title': 'What is AI automation and why does your business need it?',
+    'blog.desc': 'AI automation isn’t just for big companies. We show you how to save 2–3 hours a day with automation.',
+    'blog.meta': 'July 2026 · 5 min read',
+    'blog.read': 'Read more →',
+    'blog.all': 'All articles →',
+    // footer
+    'footer.status': 'available for projects', 'footer.loc': 'budapest, hungary',
+  };
+  const TITLE = { hu: 'Noxel — Weboldalak kis vállalkozásoknak', en: 'Noxel — Websites for small businesses' };
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if (lang === 'en') {
+        if (el.dataset.hu == null) el.dataset.hu = el.textContent;
+        if (EN[key] != null) el.textContent = EN[key];
+      } else if (el.dataset.hu != null) {
+        el.textContent = el.dataset.hu;
+      }
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      if (lang === 'en') {
+        if (el.dataset.huHtml == null) el.dataset.huHtml = el.innerHTML;
+        if (EN[key] != null) el.innerHTML = EN[key];
+      } else if (el.dataset.huHtml != null) {
+        el.innerHTML = el.dataset.huHtml;
+      }
+    });
+    document.title = TITLE[lang] || document.title;
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    try { localStorage.setItem('noxel_lang', lang); } catch (e) {}
+  }
+
+  (function(){
+    var saved = 'hu';
+    try { var s = localStorage.getItem('noxel_lang'); if (s === 'en' || s === 'hu') saved = s; } catch (e) {}
+    applyLang(saved);
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+    });
   })();
 </script>
 </body>
