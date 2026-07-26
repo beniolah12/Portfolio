@@ -271,6 +271,7 @@
     .modal-cta { padding: 1.25rem 1.5rem; }
     .fb-cards { grid-template-columns: 1fr 1fr; }
     .modal-title { font-size: 1.5rem; }
+    .hero-canvas { opacity: 0.32; }
   }
   @media (max-width: 400px) {
     .hero-title { font-size: 1.9rem; }
@@ -618,7 +619,9 @@
     resize();
     window.addEventListener('resize', resize);
     window.addEventListener('load', resize);
-    const N = window.innerWidth < 640 ? 85 : 130;
+    const isMobile = window.innerWidth < 640;
+    const N = isMobile ? 40 : 130;
+    const LINK_DIST = isMobile ? 90 : 150;
     const dots = Array.from({length:N}, function(){ return {
       x: Math.random()*canvas.width, y: Math.random()*canvas.height,
       r: Math.random()*1.6+0.7, vx:(Math.random()-0.5)*0.35, vy:(Math.random()-0.5)*0.35
@@ -637,9 +640,9 @@
         for(let j=i+1;j<dots.length;j++){
           const a=dots[i], b=dots[j];
           const dist=Math.hypot(a.x-b.x, a.y-b.y);
-          if(dist<150){
+          if(dist<LINK_DIST){
             ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-            ctx.strokeStyle='rgba(150,160,255,'+(0.34*(1-dist/150))+')';
+            ctx.strokeStyle='rgba(150,160,255,'+(0.34*(1-dist/LINK_DIST))+')';
             ctx.lineWidth=0.8; ctx.stroke();
           }
         }
